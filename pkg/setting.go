@@ -2,7 +2,7 @@
  * @Description:load setting
  * @Version: 1.0
  * @Date: 2021-10-08 22:12:57
- * @LastEditTime: 2021-10-08 22:56:57
+ * @LastEditTime: 2021-10-09 00:16:10
  */
 package pkg
 
@@ -16,7 +16,7 @@ import (
 var (
 	Cfg          *ini.File
 	RunMode      string
-	HTTPPort     string
+	HTTPPort     int
 	ReadTimeout  time.Duration
 	WriteTimeout time.Duration
 	PageSize     int
@@ -41,7 +41,7 @@ func LoadServer() {
 	if err != nil {
 		log.Fatalf("Fail to get section 'server': %v", err)
 	}
-	HTTPPort = sec.Key("HTTP_PORT").MustString("8000")
+	HTTPPort = sec.Key("HTTP_PORT").MustInt(8000)
 	ReadTimeout = time.Duration(sec.Key("READ_TIMEOUT").MustInt(60)) * time.Second
 	WriteTimeout = time.Duration(sec.Key("WRITE_TIMEOUT").MustInt(60)) * time.Second
 }
