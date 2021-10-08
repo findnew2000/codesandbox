@@ -2,7 +2,7 @@
  * @Description:db models
  * @Version: 1.0
  * @Date: 2021-10-08 23:54:12
- * @LastEditTime: 2021-10-08 23:56:49
+ * @LastEditTime: 2021-10-09 03:21:56
  */
 package models
 
@@ -10,7 +10,7 @@ import (
 	"fmt"
 	"log"
 
-	"gitee.com/findnew/dockapp/pkg"
+	"github.com/findnew2000/dockapp/pkg"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )

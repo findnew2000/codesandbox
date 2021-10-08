@@ -2,12 +2,12 @@
  * @Description:router
  * @Version: 1.0
  * @Date: 2021-10-09 00:27:21
- * @LastEditTime: 2021-10-09 00:28:30
+ * @LastEditTime: 2021-10-09 03:21:10
  */
 package routers
 
 import (
-	"gitee.com/findnew/dockapp/pkg"
+	"github.com/findnew2000/dockapp/pkg"
 	"github.com/gin-gonic/gin"
 )
 
