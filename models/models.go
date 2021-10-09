@@ -2,26 +2,24 @@
  * @Description:db models
  * @Version: 1.0
  * @Date: 2021-10-08 23:54:12
- * @LastEditTime: 2021-10-09 15:17:33
+ * @LastEditTime: 2021-10-10 01:37:03
  */
 package models
 
 import (
+	"context"
 	"fmt"
 	"log"
+	"time"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"github.com/qiniu/qmgo"
 	"github.com/snmimi/dockapp/pkg"
 )
 
-var db *gorm.DB
-
-type Model struct {
-	ID         int `gorm:"primary_key" json:"id"`
-	CreatedOn  int `json:"created_on"`
-	ModifiedOn int `json:"modified_on"`
-}
+var Db *gorm.DB
+var Cli *qmgo.QmgoClient
 
 func init() {
 	var (
@@ -38,22 +36,40 @@ func init() {
 	password = sec.Key("PASSWORD").String()
 	host = sec.Key("HOST").String()
 	tablePrefix = sec.Key("TABLE_PREFIX").String()
-	db, err = gorm.Open(dbType, fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local",
+	Db, err = gorm.Open(dbType, fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local",
 		user,
 		password,
 		host,
 		dbName))
 	if err != nil {
 		log.Println(err)
+	} else {
+		println("db opend")
 	}
 	gorm.DefaultTableNameHandler = func(db *gorm.DB, defaultTableName string) string {
 		return tablePrefix + defaultTableName
 	}
-	db.SingularTable(true)
-	db.LogMode(true)
-	db.DB().SetMaxIdleConns(10)
-	db.DB().SetMaxOpenConns(100)
+	Db.SingularTable(true)
+	Db.LogMode(true)
+	Db.DB().SetMaxIdleConns(10)
+	Db.DB().SetMaxOpenConns(100)
+
+	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+	defer cancel()
+	Cli, err = qmgo.Open(ctx, &qmgo.Config{Uri: "mongodb://n1.lan:27017", Database: "blog", Coll: "user"})
+	if err != nil {
+		panic(err)
+	} else {
+		fmt.Println("mongoDB connected")
+	}
 }
 func CloseDB() {
-	defer db.Close()
+	ctx := context.Background()
+	defer Db.Close()
+	defer func() {
+		err := Cli.Close(ctx)
+		if err != nil {
+			panic(err)
+		}
+	}()
 }
