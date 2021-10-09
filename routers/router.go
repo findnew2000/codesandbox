@@ -2,13 +2,13 @@
  * @Description:router
  * @Version: 1.0
  * @Date: 2021-10-09 00:27:21
- * @LastEditTime: 2021-10-09 03:21:10
+ * @LastEditTime: 2021-10-09 15:17:22
  */
 package routers
 
 import (
-	"github.com/findnew2000/dockapp/pkg"
 	"github.com/gin-gonic/gin"
+	"github.com/snmimi/dockapp/pkg"
 )
 
 func InitRouter() *gin.Engine {

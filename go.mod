@@ -1,4 +1,4 @@
-module github.com/findnew2000/dockapp
+module github.com/snmimi/dockapp
 
 go 1.17
 

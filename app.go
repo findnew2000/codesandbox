@@ -2,7 +2,7 @@
  * @Description:main
  * @Version: 1.0
  * @Date: 2021-10-08 21:18:07
- * @LastEditTime: 2021-10-09 03:21:36
+ * @LastEditTime: 2021-10-09 15:16:53
  */
 package main
 
@@ -10,8 +10,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/findnew2000/dockapp/pkg"
-	"github.com/findnew2000/dockapp/routers"
+	"github.com/snmimi/dockapp/pkg"
+	"github.com/snmimi/dockapp/routers"
 )
 
 func main() {
