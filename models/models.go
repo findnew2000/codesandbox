@@ -2,7 +2,7 @@
  * @Description:db models
  * @Version: 1.0
  * @Date: 2021-10-08 23:54:12
- * @LastEditTime: 2021-10-10 01:37:03
+ * @LastEditTime: 2021-10-10 12:48:38
  */
 package models
 
@@ -54,6 +54,7 @@ func init() {
 	Db.DB().SetMaxIdleConns(10)
 	Db.DB().SetMaxOpenConns(100)
 
+	// mongodb connection
 	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second)
 	defer cancel()
 	Cli, err = qmgo.Open(ctx, &qmgo.Config{Uri: "mongodb://n1.lan:27017", Database: "blog", Coll: "user"})
@@ -62,13 +63,13 @@ func init() {
 	} else {
 		fmt.Println("mongoDB connected")
 	}
+
 }
 func CloseDB() {
-	ctx := context.Background()
 	defer Db.Close()
 	defer func() {
-		err := Cli.Close(ctx)
-		if err != nil {
+		ctx := context.Background()
+		if err := Cli.Close(ctx); err != nil {
 			panic(err)
 		}
 	}()
